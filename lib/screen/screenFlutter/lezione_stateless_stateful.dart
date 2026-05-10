@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
+
 class LezioneStatelessStateful extends StatelessWidget {
   final String titoloLezione;
 
@@ -7,21 +9,31 @@ class LezioneStatelessStateful extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const Color neonOrange = Color(0xFFFF6D00);
+    const Color radioactiveGreen = Color(0xFFB2FF59);
+    const Color darkSurface = Color(0xFF121212);
+    const Color mutedText = Color(0xFFB0B0B0);
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FA),
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text(
           titoloLezione.toUpperCase(),
           style: const TextStyle(
             fontWeight: FontWeight.w900,
             fontSize: 16,
-            letterSpacing: 1.2,
+            letterSpacing: 1.5,
+            color: Colors.white,
           ),
         ),
-        backgroundColor: Colors.orange.shade900,
-        foregroundColor: Colors.white,
+        backgroundColor: darkSurface,
         centerTitle: true,
         elevation: 0,
+        iconTheme: const IconThemeData(color: neonOrange),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1),
+          child: Container(color: neonOrange.withOpacity(0.3), height: 1),
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 25),
@@ -30,27 +42,27 @@ class LezioneStatelessStateful extends StatelessWidget {
           children: [
             // ─── SEZIONE 1: STATELESSWIDGET ───────────────────────────────
             _cardLezione(
-              titolo: '1. StatelessWidget: Il Cartello',
-              colore: Colors.blueGrey.shade800,
-              icona: Icons.location_on_rounded,
+              titolo: '1. StatelessWidget: Il Monolito',
+              colore: Colors.blueGrey.shade400,
+              icona: Icons.layers_clear_rounded,
               corpo: RichText(
                 text: TextSpan(
-                  style: _stileTestoBase(),
+                  style: _stileTestoBase(mutedText),
                   children: [
                     const TextSpan(text: 'Uno '),
-                    _testoBold('StatelessWidget', Colors.blueGrey.shade900),
+                    _testoBold('StatelessWidget', Colors.white),
                     const TextSpan(
                       text:
-                          ' è come un cartello stradale. Una volta stampato e piantato, non cambia più.\n\n',
+                          ' è come una fotografia stampata. Una volta generato, non può cambiare le sue proprietà interne.\n\n',
                     ),
                     const TextSpan(
                       text:
-                          'Riceve i dati dal costruttore, li "disegna" sullo schermo e basta. Se i dati cambiano all\'esterno, Flutter deve distruggere il vecchio widget e crearne uno nuovo da zero.\n\n',
+                          'Se i dati esterni cambiano, Flutter distrugge l\'istanza e ne crea una nuova. È leggero, veloce e privo di "memoria".\n\n',
                     ),
-                    _testoBold('Usalo per:', Colors.black),
+                    _testoBold('Protocolli d\'uso:', Colors.blueGrey.shade200),
                     const TextSpan(
                       text:
-                          ' Testi fissi, icone, sfondi, card informative che non hanno animazioni o interazioni interne.',
+                          ' Ideale per icone, testi statici, loghi o decorazioni che non richiedono interazione dinamica.',
                     ),
                   ],
                 ),
@@ -59,26 +71,28 @@ class LezioneStatelessStateful extends StatelessWidget {
 
             // ─── SEZIONE 2: STATEFULWIDGET ────────────────────────────────
             _cardLezione(
-              titolo: '2. StatefulWidget: Il Semaforo',
-              colore: Colors.orange.shade800,
-              icona: Icons.traffic_rounded,
+              titolo: '2. StatefulWidget: L\'Entità Viva',
+              colore: neonOrange,
+              icona: Icons.loop_rounded,
               corpo: RichText(
                 text: TextSpan(
-                  style: _stileTestoBase(),
+                  style: _stileTestoBase(mutedText),
                   children: [
                     const TextSpan(text: 'Uno '),
-                    _testoBold('StatefulWidget', Colors.orange.shade900),
-                    const TextSpan(text: ' ha una "memoria interna" chiamata '),
-                    _testoBold('State', Colors.black),
+                    _testoBold('StatefulWidget', neonOrange),
+                    const TextSpan(
+                      text: ' possiede un nucleo mutabile chiamato ',
+                    ),
+                    _testoBold('State', Colors.white),
                     const TextSpan(text: '.\n\n'),
                     const TextSpan(
                       text:
-                          'È in grado di ricordarsi se un bottone è stato premuto, se un timer sta correndo o se un utente sta scrivendo in un campo di testo.\n\n',
+                          'Questa entità è in grado di evolversi: può ricordare input dell\'utente, animazioni in corso o dati scaricati dalla rete.\n\n',
                     ),
-                    _testoBold('Come funziona:', Colors.black),
+                    _testoBold('Architettura:', Colors.white),
                     const TextSpan(
                       text:
-                          ' È diviso in due classi. La prima è il widget, la seconda è lo Stato che contiene i dati e la logica.',
+                          ' È diviso in due classi: il Widget (la struttura esterna) e lo Stato (la logica e i dati che persistono).',
                     ),
                   ],
                 ),
@@ -87,27 +101,27 @@ class LezioneStatelessStateful extends StatelessWidget {
 
             // ─── SEZIONE 3: SETSTATE ──────────────────────────────────────
             _cardLezione(
-              titolo: '3. setState(): Il Grido di Aiuto',
-              colore: Colors.green.shade800,
-              icona: Icons.refresh_rounded,
+              titolo: '3. setState(): L\'Impulso di Re-Build',
+              colore: radioactiveGreen,
+              icona: Icons.electric_bolt_rounded,
               corpo: RichText(
                 text: TextSpan(
-                  style: _stileTestoBase(),
+                  style: _stileTestoBase(mutedText),
                   children: [
-                    const TextSpan(text: 'La funzione '),
+                    const TextSpan(text: 'Il comando '),
                     _testoCodiceInline('setState(() {...})'),
                     const TextSpan(
                       text:
-                          ' è il modo in cui dici a Flutter: "Ehi, qualcosa nella mia memoria è cambiato! Per favore, ridisegnami".\n\n',
+                          ' invia un segnale al framework: "Lo stato interno è mutato, aggiorna la proiezione video".\n\n',
                     ),
                     const TextSpan(
                       text:
-                          'Senza questa chiamata, tu potresti anche cambiare il valore di una variabile, ma lo schermo resterebbe identico a prima.\n\n',
+                          'Senza questo impulso, le variabili cambierebbero nella memoria ma l\'interfaccia resterebbe congelata.\n\n',
                     ),
-                    _testoBold('⚠️ Attenzione:', Colors.red.shade900),
+                    _testoBold('⚠️ Warning:', Colors.redAccent),
                     const TextSpan(
                       text:
-                          ' Non chiamare mai setState dentro il metodo build, o creerai un loop infinito che bloccherà l\'app!',
+                          ' Non invocare mai setState direttamente nel metodo build. Genereresti un sovraccarico ricorsivo fatale per l\'app.',
                     ),
                   ],
                 ),
@@ -120,17 +134,17 @@ class LezioneStatelessStateful extends StatelessWidget {
               '  _ContatoreState createState() => _ContatoreState();\n'
               '}\n\n'
               'class _ContatoreState extends State<Contatore> {\n'
-              '  int _numero = 0; // La memoria\n\n'
+              '  int _count = 0; // Memoria persistente\n\n'
               '  @override\n'
               '  Widget build(BuildContext context) {\n'
               '    return Column(\n'
               '      children: [\n'
-              '        Text("Valore: \$_numero"),\n'
+              '        Text("Scan: \$_count"),\n'
               '        ElevatedButton(\n'
               '          onPressed: () {\n'
-              '            setState(() { _numero++; }); // Ridisegna!\n'
+              '            setState(() { _count++; }); // Trigger Re-build\n'
               '          },\n'
-              '          child: Text("+1"),\n'
+              '          child: Text("INCREMENT"),\n'
               '        ),\n'
               '      ],\n'
               '    );\n'
@@ -141,8 +155,8 @@ class LezioneStatelessStateful extends StatelessWidget {
             const SizedBox(height: 30),
 
             _suggerimentoCreativo(
-              '🚀 Regola d\'oro: Inizia sempre con uno StatelessWidget. '
-              'Passa allo StatefulWidget solo quando hai bisogno di cambiare qualcosa sullo schermo "dall\'interno" del widget stesso.',
+              '💡 ANALISI TATTICA: Prediligi sempre lo StatelessWidget per massimizzare le performance. '
+              'Eclissa la logica nello StatefulWidget solo quando la mutazione dei dati è strettamente locale al widget.',
             ),
 
             const SizedBox(height: 50),
@@ -164,13 +178,14 @@ class LezioneStatelessStateful extends StatelessWidget {
       width: double.infinity,
       margin: const EdgeInsets.only(bottom: 25),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
+        color: const Color(0xFF1A1A1A),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: colore.withOpacity(0.2)),
         boxShadow: [
           BoxShadow(
-            color: colore.withOpacity(0.1),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
+            color: colore.withOpacity(0.05),
+            blurRadius: 15,
+            offset: const Offset(0, 5),
           ),
         ],
       ),
@@ -182,21 +197,21 @@ class LezioneStatelessStateful extends StatelessWidget {
             decoration: BoxDecoration(
               color: colore.withOpacity(0.05),
               borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(24),
+                top: Radius.circular(20),
               ),
             ),
             child: Row(
               children: [
-                Icon(icona, color: colore, size: 28),
+                Icon(icona, color: colore, size: 24),
                 const SizedBox(width: 15),
                 Expanded(
                   child: Text(
-                    titolo,
+                    titolo.toUpperCase(),
                     style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w900,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
                       color: colore,
-                      letterSpacing: -0.5,
+                      letterSpacing: 0.5,
                     ),
                   ),
                 ),
@@ -214,16 +229,16 @@ class LezioneStatelessStateful extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: const Color(0xFF232931),
+        color: Colors.black,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.orange.shade200.withOpacity(0.3)),
+        border: Border.all(color: Colors.white10),
       ),
       child: Text(
         codice,
         style: const TextStyle(
           color: Color(0xFFB2FF59),
           fontFamily: 'monospace',
-          fontSize: 12.5,
+          fontSize: 12,
           height: 1.5,
         ),
       ),
@@ -234,23 +249,27 @@ class LezioneStatelessStateful extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.orange.shade50,
+        color: const Color(0xFF1A1200),
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.orange.shade100),
+        border: Border.all(color: Colors.orange.withOpacity(0.2)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.psychology_alt_rounded, color: Colors.orange.shade700),
+          const Icon(
+            Icons.terminal_rounded,
+            color: Colors.orangeAccent,
+            size: 20,
+          ),
           const SizedBox(width: 15),
           Expanded(
             child: Text(
               testo,
-              style: TextStyle(
-                color: Colors.orange.shade900,
-                fontWeight: FontWeight.w500,
-                fontSize: 14,
+              style: const TextStyle(
+                color: Colors.orangeAccent,
+                fontSize: 13,
                 height: 1.5,
+                fontStyle: FontStyle.italic,
               ),
             ),
           ),
@@ -259,44 +278,25 @@ class LezioneStatelessStateful extends StatelessWidget {
     );
   }
 
-  TextStyle _stileTestoBase() =>
-      const TextStyle(color: Color(0xFF37474F), fontSize: 15, height: 1.7);
+  TextStyle _stileTestoBase(Color colore) =>
+      TextStyle(color: colore, fontSize: 14, height: 1.6);
 
   TextSpan _testoBold(String testo, Color colore) {
     return TextSpan(
       text: testo,
-      style: TextStyle(
-        fontWeight: FontWeight.bold,
-        color: colore,
-        fontSize: 16,
-      ),
+      style: TextStyle(fontWeight: FontWeight.bold, color: colore),
     );
   }
 
   TextSpan _testoCodiceInline(String testo) {
     return TextSpan(
-      text: ' `$testo` ',
-      style: TextStyle(
+      text: ' $testo ',
+      style: const TextStyle(
         fontFamily: 'monospace',
-        color: Colors.pink.shade700,
+        color: Color(0xFFB2FF59),
         fontWeight: FontWeight.bold,
-        backgroundColor: Colors.grey.shade200,
+        backgroundColor: Colors.white10,
       ),
-    );
-  }
-
-  TextSpan _elementoLista(String termine, String descrizione) {
-    return TextSpan(
-      children: [
-        TextSpan(
-          text: '• $termine: ',
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.black87,
-          ),
-        ),
-        TextSpan(text: descrizione),
-      ],
     );
   }
 }

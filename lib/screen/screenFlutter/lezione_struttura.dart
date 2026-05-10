@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
+import 'package:nuova_app/theme/horror_theme.dart'; // Assicurati che il percorso sia corretto
+
 class LezioneStruttura extends StatelessWidget {
   final String titoloLezione;
 
@@ -7,13 +10,26 @@ class LezioneStruttura extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Recupero il tema horror esteso se presente, altrimenti uso fallback
+    final horror = Theme.of(context).extension<HorrorTheme>();
+    final neonIndigo = const Color(0xFF6366F1);
+    final neonCyan = const Color(0xFF00E5FF);
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FA),
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text(titoloLezione.toUpperCase()),
-        backgroundColor: Colors.indigo.shade800,
-        foregroundColor: Colors.white,
+        title: Text(
+          titoloLezione.toUpperCase(),
+          style:
+              horror?.horrorTitle?.copyWith(fontSize: 20) ??
+              const TextStyle(
+                color: Color(0xFF00E5FF),
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+        backgroundColor: const Color(0xFF0A0A0A),
         elevation: 0,
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -23,23 +39,25 @@ class LezioneStruttura extends StatelessWidget {
             // ─── 1. MATERIALAPP ─────────────────────────────────────────────
             _cardLezione(
               titolo: '1. MaterialApp: La Fondamenta',
-              colore: Colors.indigo.shade700,
+              colore: neonIndigo,
               icona: Icons.home_work_rounded,
               corpo: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'È il widget radice della tua app. Si configura una sola volta nel main.dart.',
-                    style: _stileTestoBase(),
+                    'È la coscienza centrale della tua app. Senza di essa, i tuoi widget vagano nel vuoto senza regole.',
+                    style: _stileTestoAcademy(),
                   ),
                   const SizedBox(height: 12),
                   _elementoLista(
                     'Ruolo',
-                    'Gestisce il tema globale (colori, font) e le rotte (navigazione).',
+                    'Gestisce il tema globale e le rotte della navigazione.',
+                    neonIndigo,
                   ),
                   _elementoLista(
                     'Metafora',
-                    'Immaginala come l\'intero sistema elettrico e idraulico di una casa.',
+                    'Immaginala come l\'intero sistema nervoso di una casa.',
+                    neonIndigo,
                   ),
                 ],
               ),
@@ -48,24 +66,24 @@ class LezioneStruttura extends StatelessWidget {
             // ─── 2. SCAFFOLD ────────────────────────────────────────────────
             _cardLezione(
               titolo: '2. Scaffold: L\'Impalcatura',
-              colore: Colors.blue.shade700,
+              colore: Colors.blueAccent,
               icona: Icons.architecture_rounded,
               corpo: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Ogni nuova pagina che crei deve poggiare su uno Scaffold. Ti fornisce la struttura standard delle app moderne.',
-                    style: _stileTestoBase(),
+                    'Ogni nuova dimensione (pagina) richiede uno Scaffold. È la struttura che impedisce al codice di collassare su se stesso.',
+                    style: _stileTestoAcademy(),
                   ),
                   _boxCodice(
                     'return Scaffold(\n'
-                    '  appBar: AppBar(title: Text("Titolo")),\n'
+                    '  appBar: AppBar(title: Text("Rituale")),\n'
                     '  body: Center(child: Text("Contenuto")),\n'
                     '  floatingActionButton: FloatingActionButton(...),\n'
                     ');',
                   ),
                   _alertSuggerimento(
-                    'Regola d\'oro: Senza lo Scaffold, i widget di testo apparirebbero brutti, senza stile e con linee rosse sotto.',
+                    '⚠ AVVERTENZA: Senza lo Scaffold, i tuoi widget di testo appariranno come spettri rossi e gialli senza stile.',
                   ),
                 ],
               ),
@@ -74,24 +92,21 @@ class LezioneStruttura extends StatelessWidget {
             // ─── 3. ORGANIZZAZIONE CARTELLE ─────────────────────────────────
             _cardLezione(
               titolo: '3. Modularità: lib/ directory',
-              colore: Colors.teal.shade700,
+              colore: Colors.tealAccent,
               icona: Icons.folder_copy_rounded,
               corpo: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Perché dividere il codice? Per trovare le cose in 2 secondi invece di scorrere 2000 righe di file.',
-                    style: _stileTestoBase(),
+                    'Dividere il codice non è un optional. È l\'unico modo per non perdersi nei labirinti di file da 2000 righe.',
+                    style: _stileTestoAcademy(),
                   ),
                   _boxCodice(
                     'lib/\n'
-                    ' ├── main.dart       # Punto di ingresso\n'
-                    ' ├── screens/        # Pagine intere (Scaffold)\n'
-                    ' ├── widgets/        # Pezzi riutilizzabili\n'
-                    ' └── models/         # Classi per i dati',
-                  ),
-                  _suggerimentoCreativo(
-                    'Se un pezzo di codice lo usi in più di due posti, portalo nella cartella widgets/.',
+                    ' ├── main.dart       # Il Cuore\n'
+                    ' ├── screens/        # Le Dimensioni (Pagine)\n'
+                    ' ├── widgets/        # Le Parti (Componenti)\n'
+                    ' └── models/         # I Dati (Anima)',
                   ),
                 ],
               ),
@@ -100,42 +115,51 @@ class LezioneStruttura extends StatelessWidget {
             // ─── 4. ROW & COLUMN ────────────────────────────────────────────
             _cardLezione(
               titolo: '4. Layout: Row e Column',
-              colore: Colors.deepPurple.shade700,
+              colore: Colors.deepPurpleAccent,
               icona: Icons.view_quilt_rounded,
               corpo: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Il body dello Scaffold accetta un solo figlio. Per metterne più di uno, devi usare dei contenitori multi-figlio.',
-                    style: _stileTestoBase(),
+                    'I contenitori multi-figlio governano lo spazio. Decidono come le entità grafiche devono allinearsi.',
+                    style: _stileTestoAcademy(),
                   ),
                   const SizedBox(height: 12),
                   _elementoLista(
                     'Column',
-                    'Dispone i widget dall\'alto verso il basso (verticale).',
+                    'Dispone i widget verticalmente.',
+                    Colors.deepPurpleAccent,
                   ),
                   _elementoLista(
                     'Row',
-                    'Dispone i widget da sinistra a destra (orizzontale).',
+                    'Dispone i widget orizzontalmente.',
+                    Colors.deepPurpleAccent,
                   ),
 
-                  // Esempio Visivo Row
                   const SizedBox(height: 15),
-                  _testoBold('Esempio Row visiva:', Colors.black87),
+                  _testoBold('Dimostrazione Row:', Colors.white),
                   Container(
                     padding: const EdgeInsets.all(15),
                     decoration: BoxDecoration(
-                      color: Colors.deepPurple.shade50,
+                      color: Colors.deepPurple.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.deepPurple.shade100),
+                      border: Border.all(
+                        color: Colors.deepPurpleAccent.withOpacity(0.3),
+                      ),
                     ),
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Icon(Icons.star, color: Colors.amber),
-                        Text('Widget 1'),
-                        Icon(Icons.star, color: Colors.amber),
-                        Text('Widget 2'),
+                        Icon(Icons.visibility, color: Colors.deepPurpleAccent),
+                        Text(
+                          'Widget A',
+                          style: TextStyle(color: Colors.white70),
+                        ),
+                        Icon(Icons.visibility, color: Colors.deepPurpleAccent),
+                        Text(
+                          'Widget B',
+                          style: TextStyle(color: Colors.white70),
+                        ),
                       ],
                     ),
                   ),
@@ -149,7 +173,10 @@ class LezioneStruttura extends StatelessWidget {
     );
   }
 
-  //─── COMPONENTI GRAFICI DI SUPPORTO  ──────────────────
+  //─── COMPONENTI GRAFICI HORROR ──────────────────
+
+  TextStyle _stileTestoAcademy() =>
+      const TextStyle(color: Colors.white70, fontSize: 15, height: 1.6);
 
   Widget _cardLezione({
     required String titolo,
@@ -161,13 +188,14 @@ class LezioneStruttura extends StatelessWidget {
       width: double.infinity,
       margin: const EdgeInsets.only(bottom: 25),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
+        color: const Color(0xFF121212),
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: colore.withOpacity(0.4)),
         boxShadow: [
           BoxShadow(
-            color: colore.withOpacity(0.1),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
+            color: colore.withOpacity(0.05),
+            blurRadius: 15,
+            spreadRadius: 1,
           ),
         ],
       ),
@@ -175,32 +203,34 @@ class LezioneStruttura extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(18),
             decoration: BoxDecoration(
               color: colore.withOpacity(0.05),
               borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(24),
+                top: Radius.circular(15),
               ),
             ),
             child: Row(
               children: [
-                Icon(icona, color: colore, size: 28),
+                Icon(
+                  icona,
+                  color: colore,
+                  size: 24,
+                  shadows: [Shadow(color: colore, blurRadius: 10)],
+                ),
                 const SizedBox(width: 15),
-                Expanded(
-                  child: Text(
-                    titolo,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w900,
-                      color: colore,
-                      letterSpacing: -0.5,
-                    ),
+                Text(
+                  titolo,
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: colore,
                   ),
                 ),
               ],
             ),
           ),
-          Padding(padding: const EdgeInsets.all(22), child: corpo),
+          Padding(padding: const EdgeInsets.all(20), child: corpo),
         ],
       ),
     );
@@ -209,46 +239,49 @@ class LezioneStruttura extends StatelessWidget {
   Widget _boxCodice(String codice) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      padding: const EdgeInsets.all(18),
+      margin: const EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: const Color(0xFF232931),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.deepOrange.shade200.withOpacity(0.3)),
+        color: Colors.black,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.white10),
       ),
       child: Text(
         codice,
         style: const TextStyle(
           color: Color(0xFFB2FF59),
           fontFamily: 'monospace',
-          fontSize: 12.5,
-          height: 1.5,
+          fontSize: 12,
+          height: 1.4,
         ),
       ),
     );
   }
 
-  Widget _suggerimentoCreativo(String testo) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.deepOrange.shade50,
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.deepOrange.shade100),
-      ),
+  Widget _elementoLista(String termine, String descrizione, Color colore) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.lightbulb_outline, color: Colors.deepOrange.shade700),
-          const SizedBox(width: 15),
+          Text(
+            '• ',
+            style: TextStyle(color: colore, fontWeight: FontWeight.bold),
+          ),
           Expanded(
-            child: Text(
-              testo,
-              style: TextStyle(
-                color: Colors.deepOrange.shade900,
-                fontWeight: FontWeight.w500,
-                fontSize: 14,
-                height: 1.5,
+            child: RichText(
+              text: TextSpan(
+                style: _stileTestoAcademy(),
+                children: [
+                  TextSpan(
+                    text: '$termine: ',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: colore.withOpacity(0.8),
+                    ),
+                  ),
+                  TextSpan(text: descrizione),
+                ],
               ),
             ),
           ),
@@ -262,28 +295,25 @@ class LezioneStruttura extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 10),
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: Colors.amber.shade50,
+        color: Colors.red.withOpacity(0.05),
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.amber.shade200),
+        border: Border.all(color: Colors.red.withOpacity(0.2)),
       ),
       child: Text(
         testo,
         style: const TextStyle(
+          color: Colors.redAccent,
           fontStyle: FontStyle.italic,
-          fontSize: 15,
+          fontSize: 14,
           height: 1.5,
         ),
       ),
     );
   }
 
-  TextStyle _stileTestoBase() =>
-      const TextStyle(color: Color(0xFF37474F), fontSize: 15, height: 1.7);
-
-  // Questo mancava ed è fondamentale per i titoli in grassetto colorati
   Widget _testoBold(String testo, Color colore) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 4),
+      padding: const EdgeInsets.only(bottom: 8),
       child: Text(
         testo,
         style: TextStyle(
@@ -291,41 +321,6 @@ class LezioneStruttura extends StatelessWidget {
           color: colore,
           fontSize: 16,
         ),
-      ),
-    );
-  }
-
-  // Questo mancava: serve per creare i punti elenco con termine e descrizione
-  Widget _elementoLista(String termine, String descrizione) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      child: RichText(
-        text: TextSpan(
-          style: _stileTestoBase(),
-          children: [
-            TextSpan(
-              text: '• $termine: ',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            TextSpan(text: descrizione),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // Questo serve per evidenziare il codice inline tipo `setState`
-  TextSpan _testoCodiceInline(String testo) {
-    return TextSpan(
-      text: ' `$testo` ',
-      style: TextStyle(
-        fontFamily: 'monospace',
-        color: Colors.pink.shade700,
-        fontWeight: FontWeight.bold,
-        backgroundColor: Colors.grey.shade200,
       ),
     );
   }
