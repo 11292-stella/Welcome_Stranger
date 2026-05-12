@@ -6,10 +6,12 @@ import 'package:nuova_app/screen/screenFlutter/lezione_data_models.dart';
 import 'package:nuova_app/screen/screenFlutter/lezione_debug_tree.dart';
 import 'package:nuova_app/screen/screenFlutter/lezione_error_handling_horror.dart';
 import 'package:nuova_app/screen/screenFlutter/lezione_form_input.dart';
+import 'package:nuova_app/screen/screenFlutter/lezione_grimorio_page.dart';
 import 'package:nuova_app/screen/screenFlutter/lezione_layout.dart';
 import 'package:nuova_app/screen/screenFlutter/lezione_listview.dart';
 import 'package:nuova_app/screen/screenFlutter/lezione_nascita_widget.dart';
 import 'package:nuova_app/screen/screenFlutter/lezione_networking_intro.dart';
+import 'package:nuova_app/screen/screenFlutter/lezione_post_form.dart';
 import 'package:nuova_app/screen/screenFlutter/lezione_provider.dart';
 import 'package:nuova_app/screen/screenFlutter/lezione_real_app_step_by_step.dart';
 import 'package:nuova_app/screen/screenFlutter/lezione_riverpod_intro.dart';
@@ -252,6 +254,32 @@ class HomePage extends StatelessWidget {
               context,
               const LezioneRealAppStepByStep(
                 titoloLezione: 'Real App Step by Step',
+              ),
+            ),
+          ),
+
+          // --- NUOVA LEZIONE 20: POST & FORMS ---
+          InizioCard(
+            titolo: '20. Il Patto: POST & Form',
+            descrizione:
+                'Impara a inviare dati al server e gestire i form con Riverpod.',
+            colore: const Color(
+              0xFF00E5FF,
+            ), // Neon Cyan (per staccare dal verde)
+            onTap: () => _naviga(
+              context,
+              const LezionePostForm(titoloLezione: 'Inviare Dati (POST)'),
+            ),
+          ),
+          // --- LEZIONE 21: LOCAL STORAGE ---
+          InizioCard(
+            titolo: '21. Il Grimorio: Local Storage',
+            descrizione: 'Incidi i dati nel dispositivo per renderli eterni.',
+            colore: const Color(0xFFD500F9), // Neon Purple
+            onTap: () => _naviga(
+              context,
+              const LezioneGrimorio(
+                titoloLezione: 'Il Grimorio (SharedPreferences)',
               ),
             ),
           ),
