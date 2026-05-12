@@ -20,6 +20,7 @@ import 'package:nuova_app/screen/screenFlutter/lezione_stateless_stateful.dart';
 import 'package:nuova_app/screen/screenFlutter/lezione_struttura.dart';
 import 'package:nuova_app/screen/screenFlutter/lezione_theme_extensions.dart';
 import 'package:nuova_app/screen/screenFlutter/lezione_riverpod_pilastri.dart';
+import 'package:nuova_app/screen/screenFlutter/lezione_build_apk.dart';
 // Importiamo il tema personalizzato
 import 'package:nuova_app/theme/horror_theme.dart';
 
@@ -282,6 +283,18 @@ class HomePage extends StatelessWidget {
                 titoloLezione: 'Il Grimorio (SharedPreferences)',
               ),
             ),
+          ),
+          _sezioneTitolo("DISTRIBUZIONE & RITI FINALI"),
+
+          // --- LEZIONE 22: BUILD APK ---
+          InizioCard(
+            titolo: '22. L\'Incarnazione: Build APK',
+            descrizione:
+                'Evoca il file definitivo per installare l\'app sul tuo smartphone.',
+            colore: const Color(
+              0xFFC6FF00,
+            ), // Neon Green (lo stesso della lezione)
+            onTap: () => _naviga(context, const LezioneBuildAPK()),
           ),
         ],
       ),
